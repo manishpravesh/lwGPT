@@ -7,5 +7,5 @@ const router = express.Router();
 
 app.route("/create-checkout-session").post(async (req, res) => {
   try {
-  } catch {}
+  } catch (e) {}
 });
