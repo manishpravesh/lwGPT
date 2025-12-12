@@ -1,7 +1,7 @@
-# import os
+import os
 import json
 import logging
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
@@ -11,8 +11,10 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # --- Load .env & API Key ---
-# load_dotenv()
-groq_api_key = "REMOVED_SECRET" # os.getenv("GROQ_API_KEY")
+load_dotenv()
+
+# Fetch API key
+groq_api_key = os.getenv("GROQ_API_KEY")
 
 llm = None
 legal_chain = None
