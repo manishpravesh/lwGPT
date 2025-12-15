@@ -2,11 +2,27 @@ import dotenv from "dotenv";
 import express from "express";
 import Stripe from "stripe";
 import cors from "cors";
+import authRoutes from "./auth/authRoutes.js";
+
+const users = []; // change to db
 
 const app = express();
 const router = express.Router();
 dotenv.config();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+// --------------------------- temp
+app.use("/auth", authRoutes);
+import authMiddleware from "./middleware/authMiddleware.js";
+
+app.get("/auth/me", authMiddleware, (req, res) => {
+  res.json({
+    message: "You are authenticated",
+    user: req.user,
+  });
+});
+
+// --------------------------
 
 app.use(
   cors({
@@ -15,7 +31,6 @@ app.use(
     credentials: true,
   })
 );
-
 app.use(express.json());
 
 router.post("/create-checkout-session", async (req, res) => {
