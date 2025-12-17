@@ -5,6 +5,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -12,6 +13,32 @@ export const AuthProvider = ({ children }) => {
       setToken(storedToken);
     }
   }, []);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (!token) {
+        setUser(null);
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/auth/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await res.json();
+        setUser(data.user);
+      } catch (err) {
+        console.error("Failed to fetch user", err);
+        setUser(null);
+      }
+    };
+
+    fetchUser();
+  }, [token]);
+
   const login = async (email, password) => {
     const data = await loginUser(email, password);
     setToken(data.token);
@@ -31,6 +58,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         token,
+        user,
         isAuth: !!token,
         login,
         register,

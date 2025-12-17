@@ -3,8 +3,10 @@ import Section from "./Section";
 import { pricing } from "../constants";
 import { check } from "../assets";
 import Button from "./Button";
+import { useAuth } from "../context/AuthContext";
 
 const Pricing = () => {
+  const { token } = useAuth();
   const glassEffect =
     "bg-n-7/30 backdrop-blur-lg border border-white/5 shadow-lg";
 
@@ -14,7 +16,10 @@ const Pricing = () => {
         "http://localhost:5000/api/create-checkout-session",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify({ plan }),
         }
       );

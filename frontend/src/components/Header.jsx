@@ -6,8 +6,10 @@ import { useLocation } from "react-router-dom";
 import { disablePageScroll, enablePageScroll } from "scroll-lock";
 import MenuSvg from "../assets/svg/MenuSvg.jsx";
 import { HamburgerMenu } from "./design/Header.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 
 const Header = () => {
+  const { isAuth, logout, user } = useAuth();
   const [openNavigation, setOpenNavigation] = useState(false);
   const toggleNavigation = () => {
     setOpenNavigation(!openNavigation);
@@ -29,8 +31,13 @@ const Header = () => {
       }`}
     >
       <div className="flex items-center px-5 lg:px-7.5 xl:px-10 max-lg:py-4">
-        <a className="block w-[12rem] xl:mr-8" href="#hero">
+        <a className=" flex block w-[12rem] xl:mr-8" href="#hero">
           <img src={brainwave} width={190} height={40} alt="Brainwave" />
+          {isAuth && user && (
+            <span className="hidden lg:inline-flex items-center mr-4 px-3 py-1 text-xs rounded-full bg-color-1/20 text-color-1">
+              {user.role.toUpperCase()}
+            </span>
+          )}
         </a>
 
         <nav
@@ -59,22 +66,30 @@ const Header = () => {
           <HamburgerMenu />
         </nav>
 
-        <a
-          href="#signup"
-          className="button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block"
-        >
-          New account
-        </a>
-        <Button className="hidden lg:flex" href="#login">
-          Sign in
-        </Button>
+        {!isAuth ? (
+          <>
+            <a
+              href="/register"
+              className="button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block"
+            >
+              New account
+            </a>
+            <Button className="hidden lg:flex" href="/login">
+              Sign in
+            </Button>
+          </>
+        ) : (
+          <Button className="hidden lg:flex" onClick={logout}>
+            Logout
+          </Button>
+        )}
 
         <Button
           className="ml-auto lg:hidden"
           px="px-3"
           onClick={toggleNavigation}
         >
-        <MenuSvg openNavigation={openNavigation}/>
+          <MenuSvg openNavigation={openNavigation} />
         </Button>
       </div>
     </div>

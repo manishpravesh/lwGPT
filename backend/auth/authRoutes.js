@@ -36,9 +36,8 @@ router.post("/login", async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ error: "Missing credentials" });
     }
-    const user = users.find((u) => {
-      u.email === email;
-    });
+    const user = users.find((u) => u.email === email);
+
     if (!user) {
       return res.status(400).json({ error: "Invalid Cred." });
     }
