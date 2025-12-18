@@ -1,21 +1,34 @@
 import jwt from "jsonwebtoken";
+import prisma from "../lib/prisma.js";
 
-const authMiddleware = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization;
-  if (!authHeader) {
-    return res.status(401).json({ error: "NO token provided" });
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ error: "No token provided" });
   }
-  // foramat bearer <token>
-  const token = authHeader.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({ error: "Invalid token format" });
-  }
+
   try {
+    const token = authHeader.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.id },
+      select: {
+        id: true,
+        email: true,
+        role: true,
+      },
+    });
+
+    if (!user) {
+      return res.status(401).json({ error: "User not found" });
+    }
+
+    req.user = user;
     next();
-  } catch (e) {
-    return res.status(401).json({ error: "Invalid or expired token" });
+  } catch (err) {
+    return res.status(401).json({ error: "Invalid token" });
   }
 };
 

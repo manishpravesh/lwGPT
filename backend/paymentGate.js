@@ -6,6 +6,7 @@ import cors from "cors";
 import authRoutes from "./auth/authRoutes.js";
 import authMiddleware from "./middleware/authMiddleware.js";
 import { users } from "./auth/userStore.js";
+import prisma from "./lib/prisma.js";
 
 dotenv.config();
 
@@ -22,7 +23,13 @@ app.use(
 );
 
 //  MUST COME BEFORE ROUTES
-app.use(express.json());
+app.use((req, res, next) => {
+  if (req.originalUrl === "/webhook") {
+    next();
+  } else {
+    express.json()(req, res, next);
+  }
+});
 
 // ---------------- AUTH ROUTES ----------------
 app.use("/auth", authRoutes);
@@ -57,13 +64,16 @@ router.post("/create-checkout-session", authMiddleware, async (req, res) => {
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
+      metadata: {
+        userId: req.user.id,
+        plan,
+      },
       line_items: [
         {
           price_data: {
             currency: "usd",
             product_data: {
-              name: `AI Lawyer ${plan.toUpperCase()} Version`,
-              description: `It is ${plan.toUpperCase()} Subscription Plan`,
+              name: `AI Lawyer ${plan.toUpperCase()} Plan`,
             },
             unit_amount: PLAN_PRICES[plan] * 100,
           },
@@ -92,11 +102,84 @@ router.post("/payment-success", authMiddleware, async (req, res) => {
   res
     .status(200)
     .json({ message: "User plan updated successfully", plan: user.plan });
+
+  const newToken = jwt.sign(
+    {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: "1h" }
+  );
+
   res.json({
     message: "role upgraded",
     role: user.role,
+    token: newToken,
   });
 });
+
+app.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  async (req, res) => {
+    const sig = req.headers["stripe-signature"];
+    let event;
+
+    try {
+      event = stripe.webhooks.constructEvent(
+        req.body,
+        sig,
+        process.env.STRIPE_WEBHOOK_SECRET
+      );
+    } catch (err) {
+      console.error("Webhook signature error:", err.message);
+      return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object;
+
+      const userId = session.metadata.userId;
+      const plan = session.metadata.plan;
+
+      try {
+        // 1 Save payment
+        await prisma.payment.create({
+          data: {
+            stripeSessionId: session.id,
+            amount: session.amount_total,
+            currency: session.currency,
+            status: session.payment_status,
+            plan,
+            userId,
+          },
+        });
+
+        // 2 Upsert subscription
+        await prisma.subscription.upsert({
+          where: { userId },
+          update: { plan, active: true },
+          create: { userId, plan },
+        });
+
+        // 3️Upgrade user role
+        await prisma.user.update({
+          where: { id: userId },
+          data: { role: plan },
+        });
+
+        console.log(`User ${userId} upgraded to ${plan}`);
+      } catch (dbErr) {
+        console.error("DB error in webhook:", dbErr);
+        return res.status(500).send("Database error");
+      }
+    }
+
+    res.json({ received: true });
+  }
+);
 
 app.use("/api", router);
 

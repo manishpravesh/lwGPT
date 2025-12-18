@@ -1,34 +1,37 @@
-import React, { useEffect } from "react"; // 👈 useEffect added
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
-import { useAuth } from "../context/AuthContext"; //  get auth data
+import { useAuth } from "../context/AuthContext";
 
 const PaymentSuccessPage = () => {
   const navigate = useNavigate();
+  const { token } = useAuth();
 
-  const { token } = useAuth(); //  JWT needed for backend auth
-
-  // Runs once when this page loads
   useEffect(() => {
     const upgradeRole = async () => {
       try {
-        await fetch("http://localhost:5000/api/payment-success", {
+        const res = await fetch("http://localhost:5000/api/payment-success", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, //  send JWT
+            Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({
-            plan: "premium", //  hardcoded for now
-          }),
+          body: JSON.stringify({ plan: "premium" }),
         });
+
+        const data = await res.json();
+
+        // 🔑 THIS IS THE MISSING PIECE (E3)
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+        }
       } catch (error) {
         console.error("Role upgrade failed", error);
       }
     };
 
     if (token) {
-      upgradeRole(); //  only run if user is logged in
+      upgradeRole();
     }
   }, [token]);
 
