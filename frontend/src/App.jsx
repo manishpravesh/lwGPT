@@ -11,7 +11,6 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/chat" element={<ChatPage />} />
       <Route path="/success" element={<PaymentSuccessPage />} />
       <Route path="/cancel" element={<PaymentCancelPage />} />
       <Route
@@ -28,6 +27,15 @@ function App() {
           <PublicRoute>
             <RegisterPage />
           </PublicRoute>
+        }
+      />
+
+      <Route
+        path="/chat"
+        element={
+          <ProtectedRoute>
+            <ChatPage />
+          </ProtectedRoute>
         }
       />
     </Routes>

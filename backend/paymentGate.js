@@ -2,13 +2,15 @@ import dotenv from "dotenv";
 import express from "express";
 import Stripe from "stripe";
 import cors from "cors";
-
+import jwt from "jsonwebtoken";
+import "dotenv/config";
+dotenv.config();
 import authRoutes from "./auth/authRoutes.js";
 import authMiddleware from "./middleware/authMiddleware.js";
+import { chatWithAI } from "./controllers/chatController.js";
 import { users } from "./auth/userStore.js";
 import prisma from "./lib/prisma.js";
-
-dotenv.config();
+import chatRoutes from "./routes/chat.routes.js";
 
 const app = express();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -21,6 +23,7 @@ app.use(
     credentials: true,
   })
 );
+app.use("/api", chatRoutes);
 
 //  MUST COME BEFORE ROUTES
 app.use((req, res, next) => {
@@ -43,6 +46,9 @@ app.get("/auth/me", authMiddleware, (req, res) => {
 
 // ---------------- STRIPE ROUTES ----------------
 const router = express.Router();
+
+// ---------------- CHAT ROUTE ----------------
+// app.post("/chat", handleChat);
 
 router.post("/create-checkout-session", authMiddleware, async (req, res) => {
   try {

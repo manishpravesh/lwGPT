@@ -1,5 +1,5 @@
 import express from "express";
-import { users } from "../auth/userStore.js";
+// import { users } from "../auth/userStore.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import prisma from "../lib/prisma.js";
@@ -40,7 +40,8 @@ router.post("/register", async (req, res) => {
 
     res.status(201).json({ message: "Registration Successfull" });
   } catch (e) {
-    res.status(500).json({ error: "Registration failed" });
+    console.error("Registration error:", e);
+    res.status(500).json({ error: "Registration failed", details: e.message });
   }
 });
 
@@ -76,7 +77,8 @@ router.post("/login", async (req, res) => {
 
     res.json({ token });
   } catch (e) {
-    res.status(500).json({ error: "Login failed" });
+    console.error("Login error:", e);
+    res.status(500).json({ error: "Login failed", details: e.message });
   }
 });
 

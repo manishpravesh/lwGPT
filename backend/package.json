@@ -1,5 +1,6 @@
 {
   "name": "backend",
+  "type": "module",
   "version": "1.0.0",
   "private": true,
   "main": "paymentGate.js",
@@ -8,14 +9,17 @@
     "start": "node paymentGate.js"
   },
   "dependencies": {
-    "@prisma/client": "^7.1.0",
+    "@google/generative-ai": "^0.24.1",
+    "@prisma/adapter-pg": "^7.2.0",
+    "@prisma/client": "^7.2.0",
     "@upstash/redis": "^1.35.8",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.3",
-    "prisma": "^7.1.0",
+    "pg": "^8.16.3",
+    "prisma": "^7.2.0",
     "stripe": "^20.0.0"
   },
   "devDependencies": {

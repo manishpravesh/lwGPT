@@ -1,17 +1,17 @@
-export const sendChatToBackend = async (question) => {
-  try {
-    const response = await fetch("http://localhost:8000/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ question }),
-    });
+export const sendChatToBackend = async (message) => {
+  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/chat`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify({ message }),
+  });
 
-    const data = await response.json();
-    return data.answer;
-  } catch (error) {
-    console.error("Backend error:", error);
-    return "Sorry, the backend is not responding.";
+  if (!res.ok) {
+    throw new Error("Chat failed");
   }
+
+  const data = await res.json();
+  return data.reply;
 };
