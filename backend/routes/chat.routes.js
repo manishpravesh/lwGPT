@@ -61,4 +61,37 @@ router.get("/chats/:id", authMiddleware, async (req, res) => {
   }
 });
 
+/**
+ * DELETE /api/chats/:id
+ */
+router.delete("/chats/:id", authMiddleware, async (req, res) => {
+  try {
+    const chat = await prisma.chat.findFirst({
+      where: {
+        id: req.params.id,
+        userId: req.user.id,
+      },
+    });
+
+    if (!chat) {
+      return res.status(404).json({ error: "Chat not found" });
+    }
+
+    // Delete all messages in the chat first
+    await prisma.message.deleteMany({
+      where: { chatId: req.params.id },
+    });
+
+    // Then delete the chat
+    await prisma.chat.delete({
+      where: { id: req.params.id },
+    });
+
+    res.json({ message: "Chat deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting chat:", err);
+    res.status(500).json({ error: "Failed to delete chat" });
+  }
+});
+
 export default router;
