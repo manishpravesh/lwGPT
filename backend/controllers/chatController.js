@@ -11,9 +11,7 @@ const withRetry = async (fn, maxRetries = 3) => {
     } catch (error) {
       if (i === maxRetries - 1) throw error;
       // Wait before retrying (exponential backoff)
-      await new Promise((resolve) =>
-        setTimeout(resolve, Math.pow(2, i) * 100)
-      );
+      await new Promise((resolve) => setTimeout(resolve, Math.pow(2, i) * 100));
     }
   }
 };
@@ -41,7 +39,9 @@ export const chatWithAI = async (req, res) => {
           })
         );
         if (!chat) {
-          return res.status(403).json({ error: "Chat not found or unauthorized" });
+          return res
+            .status(403)
+            .json({ error: "Chat not found or unauthorized" });
         }
       } else {
         // Create new chat
@@ -56,7 +56,9 @@ export const chatWithAI = async (req, res) => {
       }
     } catch (dbErr) {
       console.error("Database error in chat creation:", dbErr.message);
-      return res.status(503).json({ error: "Database temporarily unavailable" });
+      return res
+        .status(503)
+        .json({ error: "Database temporarily unavailable" });
     }
 
     // Save user message with retry
@@ -84,7 +86,9 @@ export const chatWithAI = async (req, res) => {
       response = result.response.text();
     } catch (aiErr) {
       console.error("AI generation error:", aiErr.message);
-      return res.status(503).json({ error: "AI service temporarily unavailable" });
+      return res
+        .status(503)
+        .json({ error: "AI service temporarily unavailable" });
     }
 
     // Save AI message with retry

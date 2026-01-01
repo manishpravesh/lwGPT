@@ -6,17 +6,17 @@ const usageLimit = (feature) => {
     try {
       const user = req.user;
       const limit = PLAN_LIMITS[user.role];
-      
+
       // Free users or unlimited plans skip the check
       if (limit === Infinity) {
         return next();
       }
 
       const key = `usage:${user.id}:${feature}`;
-      
+
       try {
         const current = await redis.incr(key);
-        
+
         // Set expiry only on first hit
         if (current === 1) {
           await redis.expire(key, 60 * 60 * 24); // 24 hours
