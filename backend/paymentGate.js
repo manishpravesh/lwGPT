@@ -1,10 +1,10 @@
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 import express from "express";
 import Stripe from "stripe";
 import cors from "cors";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
-dotenv.config();
+// dotenv.config();
 import authRoutes from "./auth/authRoutes.js";
 import authMiddleware from "./middleware/authMiddleware.js";
 import { chatWithAI } from "./controllers/chatController.js";
@@ -28,13 +28,13 @@ app.use(
 app.use("/api", chatRoutes);
 
 //  MUST COME BEFORE ROUTES
-app.use((req, res, next) => {
-  if (req.originalUrl === "/webhook") {
-    next();
-  } else {
-    express.json()(req, res, next);
-  }
-});
+// app.use((req, res, next) => {
+//   if (req.originalUrl === "/webhook") {
+//     next();
+//   } else {
+//     express.json()(req, res, next);
+//   }
+// });
 
 // ---------------- AUTH ROUTES ----------------
 app.use("/auth", authRoutes);

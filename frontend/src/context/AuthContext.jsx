@@ -6,20 +6,22 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
+  const [authReady, setAuthReady] = useState(false);
 
+  // 1️⃣ Hydrate token
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
       setToken(storedToken);
+    } else {
+      setAuthReady(true); // no token → auth resolved
     }
   }, []);
 
+  // 2️⃣ Validate token with backend
   useEffect(() => {
     const fetchUser = async () => {
-      if (!token) {
-        setUser(null);
-        return;
-      }
+      if (!token) return;
 
       try {
         const res = await fetch("http://localhost:5000/auth/me", {
@@ -28,11 +30,21 @@ export const AuthProvider = ({ children }) => {
           },
         });
 
+        if (!res.ok) {
+          // token invalid / expired
+          localStorage.removeItem("token");
+          setToken(null);
+          setUser(null);
+          return;
+        }
+
         const data = await res.json();
         setUser(data.user);
       } catch (err) {
         console.error("Failed to fetch user", err);
         setUser(null);
+      } finally {
+        setAuthReady(true); // ✅ auth resolved ONLY after backend check
       }
     };
 
@@ -52,6 +64,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("token");
     setToken(null);
+    setUser(null);
   };
 
   return (
@@ -59,7 +72,8 @@ export const AuthProvider = ({ children }) => {
       value={{
         token,
         user,
-        isAuth: !!token,
+        isAuth: !!user, // 👈 IMPORTANT
+        authReady,
         login,
         register,
         logout,

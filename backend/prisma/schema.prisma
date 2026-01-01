@@ -23,6 +23,28 @@ model User {
   // 🔁 Relations
   payments      Payment[]
   subscription  Subscription?
+  chats         Chat[]
+
+}
+
+model Chat {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String?
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+  messages  Message[]
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  chatId    String
+  role      String
+  content   String
+  createdAt DateTime @default(now())
+
+  chat      Chat     @relation(fields: [chatId], references: [id])
 }
 
 model Payment {
