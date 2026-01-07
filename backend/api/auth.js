@@ -1,23 +1,32 @@
-const express = require("express");
-const cors = require("cors");
 const { login, register } = require("../auth/authUtils");
 
 module.exports = async (req, res) => {
-  const app = express();
-
-  // CORS configuration updated to allow credentials
+  // CORS headers
   const corsOrigin = process.env.CLIENT_URL || "http://localhost:5173";
-  app.use(
-    cors({
-      origin: corsOrigin,
-      methods: ["GET", "POST", "DELETE", "PUT", "PATCH", "OPTIONS"],
-      credentials: true,
-    })
+  res.setHeader("Access-Control-Allow-Origin", corsOrigin);
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   );
-  app.use(express.json());
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
 
-  app.post("/login", login);
-  app.post("/register", register);
+  // Handle OPTIONS preflight
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
 
-  app(req, res);
+  try {
+    if (req.method === "POST" && req.url === "/login") {
+      await login(req, res);
+    } else if (req.method === "POST" && req.url === "/register") {
+      await register(req, res);
+    } else {
+      res.status(404).json({ error: "Not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
 };
