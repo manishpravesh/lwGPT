@@ -9,9 +9,11 @@ let prisma;
 try {
   const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    max: 10, // Maximum connections
+    max: 20, // Maximum connections
+    min: 2, // Minimum connections to maintain
     idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 2000,
+    connectionTimeoutMillis: 10000, // Increased from 2000 to 10000ms
+    statement_timeout: 10000,
   });
 
   // Handle pool errors

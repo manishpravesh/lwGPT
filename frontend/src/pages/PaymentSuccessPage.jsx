@@ -10,7 +10,9 @@ const PaymentSuccessPage = () => {
   useEffect(() => {
     const upgradeRole = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/payment-success", {
+        const API_BASE_URL =
+          import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+        const res = await fetch(`${API_BASE_URL}/api/payment-success`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

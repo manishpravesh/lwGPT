@@ -18,9 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // ✅ MUST COME FIRST
+const corsOrigin = process.env.CLIENT_URL || "http://localhost:5173";
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: corsOrigin,
     methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
     credentials: true,
   })

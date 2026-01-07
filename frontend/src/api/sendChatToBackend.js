@@ -1,5 +1,8 @@
+const API_BASE_URL =
+  import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
 export const sendChatToBackend = async (message, chatId) => {
-  const res = await fetch("http://localhost:5000/api/chat", {
+  const res = await fetch(`${API_BASE_URL}/api/chat`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

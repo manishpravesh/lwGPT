@@ -24,7 +24,9 @@ export const AuthProvider = ({ children }) => {
       if (!token) return;
 
       try {
-        const res = await fetch("http://localhost:5000/auth/me", {
+        const API_BASE_URL =
+          import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+        const res = await fetch(`${API_BASE_URL}/auth/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

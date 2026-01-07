@@ -27,7 +27,9 @@ const ChatPage = () => {
 
   const fetchChats = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/chats", {
+      const API_BASE_URL =
+        import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+      const res = await fetch(`${API_BASE_URL}/api/chats`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -54,7 +56,9 @@ const ChatPage = () => {
   };
   /* ---------- Load selected chat ---------- */
   const loadChat = async (chatId) => {
-    const res = await fetch(`http://localhost:5000/api/chats/${chatId}`, {
+    const API_BASE_URL =
+      import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+    const res = await fetch(`${API_BASE_URL}/api/chats/${chatId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -133,7 +137,9 @@ const ChatPage = () => {
 
   const deletChat = async (chatId) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/chats/${chatId}`, {
+      const API_BASE_URL =
+        import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+      const res = await fetch(`${API_BASE_URL}/api/chats/${chatId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

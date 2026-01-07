@@ -12,17 +12,16 @@ const Pricing = () => {
 
   const handleBuy = async (plan) => {
     try {
-      const res = await fetch(
-        "http://localhost:5000/api/create-checkout-session",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ plan }),
-        }
-      );
+      const API_BASE_URL =
+        import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+      const res = await fetch(`${API_BASE_URL}/api/create-checkout-session`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ plan }),
+      });
       const data = await res.json();
       window.location.href = data.url;
     } catch (e) {
