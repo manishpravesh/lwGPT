@@ -195,7 +195,6 @@ app.post(
 app.use("/api", router);
 
 // ---------------- SERVER ----------------
-const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
