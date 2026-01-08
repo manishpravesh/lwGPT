@@ -13,6 +13,8 @@ import prisma from "./lib/prisma.js";
 import chatRoutes from "./routes/chat.routes.js";
 
 const app = express();
+const PORT = process.env.PORT || 5000;
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
