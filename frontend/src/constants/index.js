@@ -326,3 +326,21 @@ export const socials = [
     url: "#",
   },
 ];
+
+export const footerLinks = [
+  {
+    id: "0",
+    title: "Privacy Policy",
+    url: "#",
+  },
+  {
+    id: "1",
+    title: "Terms of Service",
+    url: "#",
+  },
+  {
+    id: "2",
+    title: "Disclaimer",
+    url: "#",
+  },
+];

@@ -2,33 +2,40 @@ import React from "react";
 import Section from "./Section";
 import BenefitHeading from "./BenefitHeading";
 import { benefits } from "../constants";
-import { GradientLight } from "./design/Benefits";
+import Arrow from "../assets/svg/Arrow";
+
 const Benefits = () => {
+  const glassEffect =
+    "bg-n-7/30 backdrop-blur-lg border border-white/5 shadow-lg";
+
   return (
     <Section>
-      <div>
+      <div className="container relative z-2">
         <BenefitHeading />
-      </div>
-      <div className="relative flex justify-center flex-wrap gap-10 mt-12">
-        {benefits.map((item) => (
-          <div
-            className="relative items-center text-center 
-                    bg-n-10/40 rounded-3xl backdrop-blur
-                     w-[16rem] h-[22rem] p-2 pt-4"
-            key={item.id}
-            style={{
-              backgroundImage: `url(${item.backgroundUrl})`,
-            }}
-          >
-            <div>
-              <h3 className="text-2xl font-semibold m-2">{item.title}</h3>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 mx-4">
+          {benefits.map((item) => (
+            <div
+              key={item.id}
+              className={`rounded-3xl p-6 h-full ${glassEffect} flex flex-col`}
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <img
+                  src={item.iconUrl}
+                  width={40}
+                  height={40}
+                  alt={item.title}
+                />
+              </div>
+              <h5 className="h5 mb-3">{item.title}</h5>
+              <p className="body-2 mb-6 text-n-3 flex-grow">{item.text}</p>
+              <div className="flex items-center gap-2 text-xs font-bold text-n-1 uppercase cursor-pointer hover:gap-3 transition-all">
+                <span>Explore more</span>
+                <Arrow />
+              </div>
             </div>
-            <div>
-              <img src={item.image} alt="" />
-            </div>
-            <p className=" text-gray-600 m-2">{item.text}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </Section>
   );

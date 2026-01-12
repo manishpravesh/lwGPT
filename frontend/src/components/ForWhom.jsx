@@ -1,6 +1,7 @@
 import React from "react";
 import Section from "./Section";
 import FeatureCard from "./FeatureCard";
+import { users, briefcase, book, building } from "../assets";
 
 const ForWhom = () => {
   const glassEffect =
@@ -43,7 +44,7 @@ export const forWhomFeatures = [
       "Get easy-to-understand legal information and assistance for everyday needs.",
     down: true,
     imageFlag: true,
-    imageURL: "",
+    imageURL: users,
   },
   {
     id: "0",
@@ -52,7 +53,7 @@ export const forWhomFeatures = [
       "Streamline your legal practice with AI-driven insights and document automation.",
     down: true,
     imageFlag: true,
-    imageURL: "",
+    imageURL: briefcase,
   },
   {
     id: "1",
@@ -61,7 +62,7 @@ export const forWhomFeatures = [
       "Enhance your legal studies with quick access to case law and legal principles.",
     down: false,
     imageFlag: true,
-    imageURL: "",
+    imageURL: book,
   },
   {
     id: "2",
@@ -70,6 +71,6 @@ export const forWhomFeatures = [
       "Protect your business with AI-powered legal advice and contract management.",
     down: true,
     imageFlag: true,
-    imageURL: "",
+    imageURL: building,
   },
 ];

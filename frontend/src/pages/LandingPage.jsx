@@ -10,6 +10,7 @@ import WhyBetter from "../components/WhyBetter.jsx";
 import ForWhom from "../components/ForWhom.jsx";
 import HowToUse from "../components/HowToUse.jsx";
 import Pricing from "../components/Pricing.jsx";
+import Footer from "../components/Footer.jsx";
 const LandingPage = () => {
   return (
     <div>
@@ -24,6 +25,7 @@ const LandingPage = () => {
       <ForWhom />
       <HowToUse />
       <Pricing />
+      <Footer />
     </div>
   );
 };
