@@ -63,8 +63,8 @@ const Footer = () => {
         <div className="border-t border-n-6 mt-10 pt-10 flex items-center justify-between text-n-4 caption">
           <p>© {new Date().getFullYear()}. All rights reserved.</p>
           <p>
-            Designed with <span className="text-color-1">♥</span> by the Gemini
-            Team
+            Developed with <span className="text-color-1">♥</span> by Manish
+            Pravesh - IIITBH
           </p>
         </div>
       </div>

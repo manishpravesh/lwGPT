@@ -11,7 +11,6 @@ import ForWhom from "../components/ForWhom.jsx";
 import HowToUse from "../components/HowToUse.jsx";
 import Pricing from "../components/Pricing.jsx";
 import Stats from "../components/Stats.jsx";
-import SecurityTrust from "../components/SecurityTrust.jsx";
 import FAQ from "../components/FAQ.jsx";
 import FinalCTA from "../components/FinalCTA.jsx";
 import Footer from "../components/Footer.jsx";
@@ -30,7 +29,6 @@ const LandingPage = () => {
       <HowToUse />
       <Pricing />
       <Stats />
-      {/* <SecurityTrust /> */}
       <FAQ />
       <FinalCTA />
       <Footer />
