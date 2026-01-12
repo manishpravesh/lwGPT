@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { brainwave } from "../assets";
 import { navigation } from "../constants";
@@ -68,12 +69,12 @@ const Header = () => {
 
         {!isAuth ? (
           <>
-            <a
-              href="/register"
+            <Link
+              to="/register"
               className="button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block"
             >
               New account
-            </a>
+            </Link>
             <Button className="hidden lg:flex" href="/login">
               Sign in
             </Button>
