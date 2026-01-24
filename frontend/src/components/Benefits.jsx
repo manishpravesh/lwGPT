@@ -9,7 +9,7 @@ const Benefits = () => {
     "bg-n-7/30 backdrop-blur-lg border border-white/5 shadow-lg";
 
   return (
-    <Section>
+    <Section id="features">
       <div className="container relative z-2">
         <BenefitHeading />
 

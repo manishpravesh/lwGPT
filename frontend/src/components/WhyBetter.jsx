@@ -8,14 +8,14 @@ const WhyBetter = () => {
     "bg-n-7/30 backdrop-blur-lg border border-white/5 shadow-lg";
 
   return (
-    <Section>
+    <Section id="why-better">
       <div className="relative flex-row gap-2 items-center justify-center text-center">
         <h2 className="relative text-4xl font-bold mb-2">
-          Why AiLaw is better?
+          Why LawGpt is Better
         </h2>
         <p>
-          We leverage advanced AI technology to provide unparalleled legal
-          insights and support.
+          We leverage cutting-edge AI technology to provide unparalleled legal
+          insights and support for modern legal professionals.
         </p>
         {/*  MANSORY STYLE LAYOUT(Pinterest layouut) here->   columns-1 md:columns-2 gap-1 */}
         <div className="columns-1 md:columns-2 gap-1 mt-10 mx-16">

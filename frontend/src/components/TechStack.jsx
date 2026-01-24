@@ -2,7 +2,15 @@ import Section from "./Section";
 
 const TechStack = () => {
   return (
-    <Section>
+    <Section id="tech-stack">
+      <div className="text-center mb-12">
+        <h2 className="text-4xl font-bold mb-2">
+          Powered by Modern Technology
+        </h2>
+        <p className="text-n-3">
+          LawGpt is built with cutting-edge AI and cloud infrastructure
+        </p>
+      </div>
       <div className="relative flex justify-center items-center min-h-[400px]">
         <div className="absolute rounded-full border border-n-10/40 min-w-72 min-h-72 flex justify-center items-center">
           <div className="absolute rounded-full border border-n-10/40 h-46 w-46 flex justify-center items-center">

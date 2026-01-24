@@ -11,7 +11,7 @@ const FinalCTA = () => {
   };
 
   return (
-    <Section className="py-16 lg:py-24">
+    <Section id="cta" className="py-16 lg:py-24">
       <div className="relative rounded-3xl overflow-hidden px-6 py-12 lg:px-16 lg:py-20">
         {/* Background with gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-n-7/40 via-n-7/20 to-n-7/40 backdrop-blur-lg border border-white/10" />
@@ -22,11 +22,13 @@ const FinalCTA = () => {
 
         {/* Content */}
         <div className="relative z-10 max-w-3xl mx-auto text-center">
-          <h2 className="h2 mb-4">Ready to Transform Your Legal Workflow?</h2>
+          <h2 className="h2 mb-4">
+            Ready to Transform Your Legal Workflow with LawGpt?
+          </h2>
           <p className="body-1 text-n-2 mb-8">
-            Join thousands of legal professionals who trust us with their most
-            important cases. Get started today with our free tier—no credit card
-            required.
+            Join thousands of legal professionals who trust LawGpt with their
+            most important cases. Get started today with our free tier—no credit
+            card required.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

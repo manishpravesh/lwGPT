@@ -7,12 +7,13 @@ const ForWhom = () => {
   const glassEffect =
     "bg-n-7/30 backdrop-blur-lg border border-white/5 shadow-lg";
   return (
-    <Section>
+    <Section id="for-whom">
       <div className="items-center justify-center text-center">
-        <h2 className="text-4xl mb-2 font-semibold">Who Is This For?</h2>
+        <h2 className="text-4xl mb-2 font-semibold">Who Should Use LawGpt?</h2>
         <p className="text-sm lg:text-base lg:mx-[10rem]">
-          Discover tools to boost your workflow. From easy document creation to
-          powerful research, our platform lets you focus on what matters.
+          From individual legal needs to enterprise solutions, LawGpt empowers
+          legal professionals and organizations with intelligent AI-powered
+          assistance.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mt-10 mx-16">
           {forWhomFeatures.map((item) => (
@@ -39,18 +40,18 @@ export default ForWhom;
 export const forWhomFeatures = [
   {
     id: "3",
-    title: "Common People",
+    title: "General Public",
     description:
-      "Get easy-to-understand legal information and assistance for everyday needs.",
+      "Get easy-to-understand legal information for everyday situations and questions.",
     down: true,
     imageFlag: true,
     imageURL: users,
   },
   {
     id: "0",
-    title: "Lawyers",
+    title: "Legal Professionals",
     description:
-      "Streamline your legal practice with AI-driven insights and document automation.",
+      "Accelerate your practice with AI-driven research, document review, and case analysis.",
     down: true,
     imageFlag: true,
     imageURL: briefcase,
@@ -59,16 +60,16 @@ export const forWhomFeatures = [
     id: "1",
     title: "Law Students",
     description:
-      "Enhance your legal studies with quick access to case law and legal principles.",
+      "Master legal concepts with instant access to case law, statutes, and legal principles.",
     down: false,
     imageFlag: true,
     imageURL: book,
   },
   {
     id: "2",
-    title: "Law Firms/Businesses",
+    title: "Corporate & Law Firms",
     description:
-      "Protect your business with AI-powered legal advice and contract management.",
+      "Scale your legal operations with AI contract analysis, compliance checks, and legal strategy.",
     down: true,
     imageFlag: true,
     imageURL: building,

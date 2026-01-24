@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { brainwave } from "../assets";
 import { navigation } from "../constants";
 import Button from "./Button";
 import { useLocation } from "react-router-dom";
@@ -32,8 +31,8 @@ const Header = () => {
       }`}
     >
       <div className="flex items-center px-5 lg:px-7.5 xl:px-10 max-lg:py-4">
-        <a className=" flex block w-[12rem] xl:mr-8" href="#hero">
-          <img src={brainwave} width={190} height={40} alt="Brainwave" />
+        <a className="flex xl:mr-8" href="#hero">
+          <span className="text-lg lg:text-xl font-bold text-n-1">LawGpt</span>
           {isAuth && user && (
             <span className="hidden lg:inline-flex items-center mr-4 px-3 py-1 text-xs rounded-full bg-color-1/20 text-color-1">
               {user.role.toUpperCase()}

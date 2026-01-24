@@ -1,4 +1,3 @@
-import { brainwave } from "../assets";
 import { socials, footerLinks } from "../constants";
 import Section from "./Section";
 
@@ -9,14 +8,16 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-2">
             <a className="inline-block mb-6" href="#hero">
-              <img src={brainwave} width={190} height={40} alt="LawGPT" />
+              <span className="text-lg lg:text-xl font-bold text-n-1">
+                LawGpt
+              </span>
             </a>
             <div className="text-n-4 caption">
               <h6 className="h6 mb-4">Disclaimer</h6>
               <p>
-                LawGPT is an AI-powered legal assistant and should not be
+                LawGpt is an AI-powered legal assistant and should not be
                 considered a substitute for professional legal advice. The
-                information provided by LawGPT is for informational purposes
+                information provided by LawGpt is for informational purposes
                 only.
               </p>
             </div>

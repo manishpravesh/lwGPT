@@ -30,12 +30,14 @@ const Pricing = () => {
   };
 
   return (
-    <Section>
+    <Section id="pricing">
       <div className="">
-        <h2 className="text-5xl text-center mb-2 font-semibold">PRICING</h2>
+        <h2 className="text-5xl text-center mb-2 font-semibold">
+          SIMPLE, TRANSPARENT PRICING
+        </h2>
         <p className="text-sm mb-8 text-center lg:text-base lg:mx-[10rem]">
-          Discover tools to boost your workflow. From easy document creation to
-          powerful research
+          Choose the perfect LawGpt plan for your legal practice. Powerful AI
+          tools at every tier.
         </p>
 
         <div className="flex flex-col mx-5 gap-4 lg:flex-row lg:mx-16">

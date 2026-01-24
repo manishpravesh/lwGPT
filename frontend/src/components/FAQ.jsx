@@ -43,11 +43,9 @@ const FAQ = () => {
   ];
 
   return (
-    <Section>
+    <Section id="faq">
       <div className="">
-        <h2 className="text-5xl text-center mb-2 font-semibold">
-          Frequently Asked Questions
-        </h2>
+        <h2 className="text-5xl text-center mb-2 font-semibold">LawGpt FAQs</h2>
         <p className="text-sm mb-12 text-center lg:text-base lg:mx-[10rem] text-n-3">
           Everything you need to know about our platform
         </p>
