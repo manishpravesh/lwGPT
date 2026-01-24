@@ -35,13 +35,13 @@ const Hero = () => {
             Welcome to your AI legal assistant
             <span className="inline-block relative">
               Revolutionizing Legal Practice
-              <img
+              {/* <img
                 src={curve}
                 alt="Curve"
                 className="absolute top-full left-0 w-full xl:-mt-2"
                 height={624}
                 width={624}
-              />
+              /> */}
             </span>
           </h1>
           <p className="body-1 max-w-3xl mx-auto mb-6 text-n-2 lg:mb-8 ">
