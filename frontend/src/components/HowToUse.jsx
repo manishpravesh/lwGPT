@@ -3,7 +3,7 @@ import FeatureCard from "./FeatureCard";
 import Section from "./Section";
 
 const HowToUse = () => {
-  const demoUrl = "https://www.youtube.com/embed/dQw4w9WgXcQ";
+  const demoUrl = "https://www.youtube.com/embed/dVCHcU--9aI";
   return (
     <Section id="how-to-use">
       <div className="text-center mt-8 mx-4 ">

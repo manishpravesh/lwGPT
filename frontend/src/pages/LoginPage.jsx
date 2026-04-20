@@ -3,9 +3,12 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import Button from "../components/Button";
 
+const DEMO_EMAIL = "demo@lawgpt.local";
+const DEMO_PASSWORD = "Demo@123456";
+
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(DEMO_EMAIL);
+  const [password, setPassword] = useState(DEMO_PASSWORD);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -101,6 +104,22 @@ const LoginPage = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+            </div>
+
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-xs text-n-4">
+                Demo account is prefilled for quick access.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail(DEMO_EMAIL);
+                  setPassword(DEMO_PASSWORD);
+                }}
+                className="text-xs font-semibold text-color-1 hover:text-color-2 transition-colors"
+              >
+                Refill demo login
+              </button>
             </div>
 
             {/* Submit Button */}

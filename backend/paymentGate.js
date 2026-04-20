@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 // dotenv.config();
 import authRoutes from "./auth/authRoutes.js";
+import { ensureDemoUser } from "./auth/ensureDemoUser.js";
 import authMiddleware from "./middleware/authMiddleware.js";
 import { chatWithAI } from "./controllers/chatController.js";
 import { users } from "./auth/userStore.js";
@@ -26,7 +27,7 @@ app.use(
     origin: corsOrigin,
     methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
     credentials: true,
-  })
+  }),
 );
 app.use("/api", chatRoutes);
 
@@ -121,7 +122,7 @@ router.post("/payment-success", authMiddleware, async (req, res) => {
       role: user.role,
     },
     process.env.JWT_SECRET,
-    { expiresIn: "1h" }
+    { expiresIn: "1h" },
   );
 
   res.json({
@@ -142,7 +143,7 @@ app.post(
       event = stripe.webhooks.constructEvent(
         req.body,
         sig,
-        process.env.STRIPE_WEBHOOK_SECRET
+        process.env.STRIPE_WEBHOOK_SECRET,
       );
     } catch (err) {
       console.error("Webhook signature error:", err.message);
@@ -189,12 +190,22 @@ app.post(
     }
 
     res.json({ received: true });
-  }
+  },
 );
 
 app.use("/api", router);
 
 // ---------------- SERVER ----------------
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await ensureDemoUser();
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  }
+};
+
+startServer();

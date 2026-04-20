@@ -19,6 +19,9 @@ dist-ssr
 frontend/.env
 backend/.env
 
+# Personal documentation (study/interview prep)
+INTERVIEW_GUIDE.md
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
